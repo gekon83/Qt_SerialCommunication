@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>641</width>
-    <height>439</height>
+    <width>518</width>
+    <height>477</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>621</width>
-      <height>418</height>
+      <width>501</width>
+      <height>449</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
@@ -29,9 +29,16 @@
        <property name="title">
         <string>Logs</string>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QTextEdit" name="textEditLog"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_Clear">
+          <property name="text">
+           <string>Clear</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -43,14 +50,14 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="pushButton_LED_on">
+         <widget class="QPushButton" name="pushButton_LedOn">
           <property name="text">
            <string>Turn On LED</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_LEDoff">
+         <widget class="QPushButton" name="pushButton_LedOff">
           <property name="text">
            <string>Turn OFF LED</string>
           </property>
@@ -116,12 +123,28 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>564</x>
-     <y>403</y>
+     <x>497</x>
+     <y>445</y>
     </hint>
     <hint type="destinationlabel">
-     <x>634</x>
+     <x>517</x>
      <y>364</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Clear</sender>
+   <signal>clicked()</signal>
+   <receiver>textEditLog</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>247</x>
+     <y>356</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>371</x>
+     <y>266</y>
     </hint>
    </hints>
   </connection>

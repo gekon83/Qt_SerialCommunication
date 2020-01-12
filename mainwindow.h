@@ -18,10 +18,15 @@ public:
 
 private slots:
     void on_pushButtonSearch_clicked();
-
     void on_pushButtonConnect_clicked();
-
     void on_pushButtonDisconnect_clicked();
+
+    void readFromPort();
+    void sendMessageToDevice(QString message);
+
+    void on_pushButton_LedOn_clicked();
+
+    void on_pushButton_LedOff_clicked();
 
 private:
     Ui::MainWindow *ui;

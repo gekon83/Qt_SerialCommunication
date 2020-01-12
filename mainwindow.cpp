@@ -68,6 +68,8 @@ void MainWindow::on_pushButtonConnect_clicked()
             this->device->setFlowControl(QSerialPort::NoFlowControl);
 
             this->addToLogs("Serial Port open.");
+            // CONNECT:
+            qDebug() << connect(this->device, SIGNAL(readyRead()), this, SLOT(readFromPort()));
         } else {
             this->addToLogs("Failed to open Serial Port!");
         }/**/
@@ -86,4 +88,38 @@ void MainWindow::on_pushButtonDisconnect_clicked()
         this->addToLogs("No open connection available!");
         return;
     }
+}
+
+void MainWindow::readFromPort() {
+  while(this->device->canReadLine()) {
+    QString line = this->device->readLine();
+    qDebug() << "line: " + line;
+
+    QString terminator = "\r";
+    int pos = line.lastIndexOf(terminator);
+    qDebug() << "line.left(pos): " + line.left(pos);
+
+    this->addToLogs(line.left(pos));
+  }
+
+}
+
+void MainWindow::sendMessageToDevice(QString message)
+{
+    if(this->device->isOpen() && this->device->isWritable()) {
+        this->addToLogs("Sending information to device " + message);
+        this->device->write(message.toStdString().c_str());
+     } else {
+        this->addToLogs("Cannot send information. Serial Port is closed!");
+     }
+}
+
+void MainWindow::on_pushButton_LedOn_clicked()
+{
+    this->sendMessageToDevice("1");
+}
+
+void MainWindow::on_pushButton_LedOff_clicked()
+{
+    this->sendMessageToDevice("0");
 }
