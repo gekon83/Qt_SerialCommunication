@@ -25,21 +25,25 @@ void MainWindow::on_pushButtonSearch_clicked()
     qDebug() << "Searching devices...";
     QList<QSerialPortInfo> devices;
     devices = QSerialPortInfo::availablePorts();
-    for(int i = 0; i < devices.count(); i++) {
-        qDebug() << devices.at(i).portName() << devices.at(i).description();
-        addToLogs("Found device: " + devices.at(i).portName() + ": " + devices.at(i).description());
-        ui->comboBoxDevices->addItem(devices.at(i).portName() + ":\t" + devices.at(i).description());
+    qDebug() << "Search completed. " << devices.count() << " devices detected";
 
-        if (devices.at(i).portName() == ui->comboBoxDevices->currentText().split(":\t").first()) {
-            if (devices.at(i).description() == ui->comboBoxDevices->currentText().split(":\t").last()) {
-                qDebug() << "Known device";
-            } else {
-                //comment
-            }
+    for(int i = 0; i < devices.count(); i++) {
+        // comparing new device to known devices in the combo box. Updating combo box only for new devices.
+        if (ui->comboBoxDevices->findText(devices.at(i).portName() + ": " + devices.at(i).description()) == -1) {
+            qDebug() << "new device detected: " << devices.at(i).portName() << devices.at(i).description();
+            addToLogs("Found device: " + devices.at(i).portName() + ": " + devices.at(i).description());
+            ui->comboBoxDevices->addItem(devices.at(i).portName() + ": " + devices.at(i).description());
+        } else {
+            qDebug() << "hey... I know this device and will not add it to my combolist";
+            addToLogs("Found already known device: " + devices.at(i).portName() + ": " + devices.at(i).description());
         }
-        qDebug() << "number of devices" + (QString) ui->comboBoxDevices->count();
+        qDebug() << "number of devices on the list" << ui->comboBoxDevices->count();
     }
-    qDebug() << "Search completed. " << devices.count() << " devices found";
+    /*
+    for (int i=0; i<ui->comboBoxDevices->count(); ++i) {
+        qDebug() << "combo: " << ui->comboBoxDevices->itemText(i);
+    }
+    */
 }
 
 void MainWindow::addToLogs(QString message)
